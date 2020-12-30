@@ -20,6 +20,7 @@ def add_new_car(cars):
     index = random.randint(0, 2)
     # Y coordinate of new cars
     y = vals.MARGIN + vals.CAR_HEIGHT/2
+    # y = vals.HEIGHT - vals.MARGIN - vals.CAR_HEIGHT/2 MYCODE
     if index == 0:
         # Center of first line
         x = vals.MARGIN + vals.CAR_WIDTH/2
@@ -58,7 +59,7 @@ def draw_cars(screen, cars):
 def draw_my_car(screen, my_car):
     # draw_my_car will draw my car on screen using its icon
     screen.blit(vals.MY_CAR_ICON, (my_car.x - my_car.width /
-                              2, my_car.y - my_car.height/2))
+                                   2, my_car.y - my_car.height/2))
 
 
 def draw_vertical_lines(screen):
@@ -90,6 +91,17 @@ def map_cars_to_lines(cars, my_car):
 def find_my_position(my_car):
     # returns index of a line my car is at (0 or 1 or 2)
     return int(my_car.x // vals.LINE_WIDTH)
+    # return int(my_car.y // vals.CAR_HEIGHT) MYCODE
+
+
+def find_enemy_position(cars):
+    return int(cars[0].y // vals.CAR_HEIGHT)  # MYCODE
+
+
+def is_my_car_behind(my_car, enemy_car):  # MYCODE
+    if enemy_car - my_car > 0:
+        return True
+    return False
 
 
 def find_closest_car(lines, index):
@@ -126,6 +138,12 @@ def choose_action(cars, my_car):
 
     # Find X index of my position
     my_position = find_my_position(my_car)
+    # enemy_position = find_enemy_position(cars) MYCODE
+    # is_behind = is_my_car_behind(my_position, enemy_position) MYCODE
+    # if is_behind:
+    #     action = "left"
+    # else:
+    #     action = "stay" MYCODE
     # Find state of each road line
     lines = map_cars_to_lines(cars, my_car)
     # Find distances to the nearest cars in all road lines
@@ -170,7 +188,7 @@ def check_if_lost(cars, my_car):
         if car.x == my_car.x and car.y == my_car.y:
             print("Ops! You crashed!")
             return True
-            
+
     return False
 
 

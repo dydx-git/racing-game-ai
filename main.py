@@ -1,11 +1,13 @@
 import pygame
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from helpers.utils import *
 from helpers.core import *
 import constants.constants as vals
 from data.data import *
+import os 
 
-model = load_model('./models/categorical_crossentropy.h5')
+model = load_model(os.path.abspath("D:/algo/huzzi/racing-game-ai/models/categorical_crossentropy.h5"))
+
 
 pygame.init()
 pygame.display.set_caption('Racing Car AI')
@@ -21,7 +23,7 @@ data = []
 my_car = My_car(vals.MY_CAR_X, vals.MY_CAR_Y)
 
 # Set ai_mode false if you want to play in autopilot mode to collect data
-ai = True
+ai = False
 # Set True if you want to collect state at every frame for data analytics
 collect_data = False
 # Decide on amount of rows after which data should be saved

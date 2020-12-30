@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # Rows to add to csv file
 DATA_ROWS = 20000
@@ -22,11 +23,12 @@ CAR_HEIGHT = 80
 LINE_WIDTH = 80
 # Initial coordinates of my car
 MY_CAR_X = MARGIN + CAR_WIDTH/2
-MY_CAR_Y = HEIGHT - MARGIN - CAR_HEIGHT/2
+# MY_CAR_Y = HEIGHT - MARGIN - CAR_HEIGHT/2
+MY_CAR_Y = MARGIN + CAR_HEIGHT/2 MYCODE
 
 # Colors in a format accepted by pygame
 BLACK = (0, 0, 0)
 GREY = (150, 150, 150)
 
-MY_CAR_ICON = pygame.image.load('./img/my_car.png')
-ENEMY_CAR_ICON = pygame.image.load('./img/enemy_car.png')
+MY_CAR_ICON = pygame.image.load(os.path.abspath("D:/algo/huzzi/racing-game-ai/img/my_car.png"))
+ENEMY_CAR_ICON = pygame.image.load(os.path.abspath("D:/algo/huzzi/racing-game-ai/img/enemy_car.png"))
