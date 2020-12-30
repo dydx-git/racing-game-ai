@@ -16,6 +16,8 @@ def initialize_screen():
 
 
 def add_new_car(cars):
+    if cars:
+        return
     # add_new_car will add a new enemy_car on the top level of one of the lines picked randomly
     index = random.randint(0, 2)
     # Y coordinate of new cars
