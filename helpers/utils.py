@@ -21,8 +21,8 @@ def add_new_car(cars):
     # add_new_car will add a new enemy_car on the top level of one of the lines picked randomly
     index = random.randint(0, 2)
     # Y coordinate of new cars
-    y = vals.MARGIN + vals.CAR_HEIGHT/2
-    # y = vals.HEIGHT - vals.MARGIN - vals.CAR_HEIGHT/2 MYCODE
+    # y = vals.MARGIN + vals.CAR_HEIGHT/2 MYCODE
+    y = vals.HEIGHT - vals.MARGIN - vals.CAR_HEIGHT/2 
     if index == 0:
         # Center of first line
         x = vals.MARGIN + vals.CAR_WIDTH/2
@@ -92,8 +92,8 @@ def map_cars_to_lines(cars, my_car):
 
 def find_my_position(my_car):
     # returns index of a line my car is at (0 or 1 or 2)
-    return int(my_car.x // vals.LINE_WIDTH)
-    # return int(my_car.y // vals.CAR_HEIGHT) MYCODE
+    # return int(my_car.x // vals.LINE_WIDTH) MYCODE
+    return int(my_car.y // vals.CAR_HEIGHT) 
 
 
 def find_enemy_position(cars):
@@ -140,12 +140,13 @@ def choose_action(cars, my_car):
 
     # Find X index of my position
     my_position = find_my_position(my_car)
-    # enemy_position = find_enemy_position(cars) MYCODE
-    # is_behind = is_my_car_behind(my_position, enemy_position) MYCODE
-    # if is_behind:
-    #     action = "left"
-    # else:
-    #     action = "stay" MYCODE
+    # MYCODE
+    enemy_position = find_enemy_position(cars)
+    is_behind = is_my_car_behind(my_position, enemy_position)
+    if is_behind:
+        action = "left"
+    else:
+        action = "stay"
     # Find state of each road line
     lines = map_cars_to_lines(cars, my_car)
     # Find distances to the nearest cars in all road lines

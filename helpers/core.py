@@ -1,9 +1,6 @@
 
 import sys
 import os
-
-dir_path = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(os.path.join(dir_path, os.pardir)))
 import constants.constants as vals
 
 class Car:
@@ -27,11 +24,11 @@ class My_car(Car):
         # 40 is the distance form the left wall to the center of the 1st road line
         if direction == "left" and self.x > vals.MARGIN + vals.LINE_WIDTH/2:
             # 80 is the distance between the road lines
-            self.x = self.x - vals.CAR_HEIGHT
-            # self.y = self.y - vals.CAR_HEIGHT MYCODE
+            # self.x = self.x - vals.CAR_HEIGHT MYCODE
+            self.y = self.y - vals.CAR_HEIGHT 
         elif direction == "right" and self.x < vals.WIDTH - vals.CAR_WIDTH:
-            self.x = self.x + vals.CAR_HEIGHT
-            # self.y = self.y + vals.CAR_HEIGHT MYCODE
+            # self.x = self.x + vals.CAR_HEIGHT MYCODE
+            self.y = self.y + vals.CAR_HEIGHT 
 
 
 class Enemy_car(Car):
@@ -43,8 +40,8 @@ class Enemy_car(Car):
 
     def move(self):
         # move method descends a car by its height ( 80px )
-        self.y = self.y + self.height
-        # self.y = self.y - self.height MYCODE
+        # self.y = self.y + self.height MYCODE
+        self.y = self.y - self.height 
 
     def deactivate(self):
         # deactivate method changes car's state to be removed later

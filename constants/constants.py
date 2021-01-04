@@ -23,8 +23,8 @@ CAR_HEIGHT = 80
 LINE_WIDTH = 80
 # Initial coordinates of my car
 MY_CAR_X = MARGIN + CAR_WIDTH/2
-MY_CAR_Y = HEIGHT - MARGIN - CAR_HEIGHT/2
-# MY_CAR_Y = MARGIN + CAR_HEIGHT/2 MYCODE
+# MY_CAR_Y = HEIGHT - MARGIN - CAR_HEIGHT/2 MYCODE
+MY_CAR_Y = MARGIN + CAR_HEIGHT/2 
 
 # Colors in a format accepted by pygame
 BLACK = (0, 0, 0)
