@@ -23,7 +23,7 @@ data = []
 my_car = My_car(vals.MY_CAR_X, vals.MY_CAR_Y)
 
 # Set ai_mode false if you want to play in autopilot mode to collect data
-ai = False
+ai = True
 # Set True if you want to collect state at every frame for data analytics
 collect_data = False
 # Decide on amount of rows after which data should be saved
@@ -31,7 +31,7 @@ rows = vals.DATA_ROWS
 # Controls allow player to move car around regardless of the autopilot or ai decisions
 player_control = False
 
-counter = 0
+counter = 298
 while 1:
     # limit runtime speed to 30 frames/second
     clock.tick(vals.FRAME_RATE)
@@ -88,7 +88,7 @@ while 1:
     draw_my_car(SCREEN, my_car)
 
     if collect_data == True:
-        if counter == rows:
+        if counter == 600:
             save_data(data)
         elif counter <= rows:
             print("Counter - ", counter, " / ", rows)

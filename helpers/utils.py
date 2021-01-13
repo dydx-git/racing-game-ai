@@ -82,7 +82,10 @@ def map_cars_to_lines(cars, my_car):
         # 2 is a label for enemy cars
         coord_x = car.x // vals.LINE_WIDTH
         coord_y = car.y // vals.LINE_WIDTH
-        lines[int(coord_x)][int(coord_y)] = 2
+        try:
+            lines[int(coord_x)][int(coord_y)] = 2
+        except IndexError:
+            pygame.quit()
 
     # 1 is a label for my car
     my_coord_x = my_car.x // vals.LINE_WIDTH
@@ -156,12 +159,6 @@ def choose_action(cars, my_car):
         action = "stay"
     else:
         action = "right"
-    # Find state of each road line
-    lines = map_cars_to_lines(cars, my_car)
-    # Find distances to the nearest cars in all road lines
-    all_distances = find_all_distances(lines)
-    # Find the safest line
-    max_index = all_distances.index(max(all_distances))
 
     # action = ""
     # # I am on the left most, best line on the right most
@@ -187,7 +184,7 @@ def choose_action(cars, my_car):
     # # I am one on the best line
     # else:
     #     action = "stay"
-    return action, my_position, all_distances
+    return action, my_position, enemy_position, is_behind, is_side_by_side
 
 
 def perform_action(action, my_car):
@@ -204,7 +201,7 @@ def check_if_lost(cars, my_car):
     return False
 
 
-def save_data_row(data, action, my_position, all_distances):
+def save_data_row(data, action, my_position, enemy_position, is_behind, is_side_by_side):
     # Saves each row into a data array for future data analytics
     if action == "left":
         action_index = 0
@@ -212,12 +209,13 @@ def save_data_row(data, action, my_position, all_distances):
         action_index = 1
     elif action == "right":
         action_index = 2
+    
     row = []
     # Inputs
     row.append(my_position)
-    row.append(all_distances[0])
-    row.append(all_distances[1])
-    row.append(all_distances[2])
+    row.append(enemy_position)
+    row.append(int(is_behind))
+    row.append(int(is_side_by_side))
     # Labels
     row.append(action_index)
     # Save each row to data file
@@ -241,17 +239,15 @@ def predict(input_array, model):
 
 def build_input_state(cars, my_car):
     # Turns all input variables into a single array
-    my_position = find_my_position(my_car)
-    lines = map_cars_to_lines(cars, my_car)
-    all_distances = find_all_distances(lines)
-    return [my_position, all_distances[0], all_distances[1], all_distances[2]]
+    action, my_position, enemy_position, is_behind, is_side_by_side = choose_action(cars, my_car)
+    return  [my_position, enemy_position, int(is_behind), int(is_side_by_side)]
 
 
 def autopilot(data, cars, my_car):
     # Autopilot will play the game infinitely to collect data
-    action, my_position, all_distances = choose_action(cars, my_car)
+    action, my_position, enemy_position, is_behind, is_side_by_side = choose_action(cars, my_car)
     perform_action(action, my_car)
-    save_data_row(data, action, my_position, all_distances)
+    save_data_row(data, action, my_position, enemy_position, is_behind, is_side_by_side)
     move_cars(cars)
 
 
