@@ -19,19 +19,20 @@ def add_new_car(cars):
     if cars:
         return
     # add_new_car will add a new enemy_car on the top level of one of the lines picked randomly
-    index = random.randint(0, 2)
+    # index = random.randint(0, 2)
     # Y coordinate of new cars
     # y = vals.MARGIN + vals.CAR_HEIGHT/2 MYCODE
-    y = vals.HEIGHT - vals.MARGIN - vals.CAR_HEIGHT/2 
-    if index == 0:
-        # Center of first line
-        x = vals.MARGIN + vals.CAR_WIDTH/2
-    elif index == 1:
-        # Center of second line
-        x = vals.MARGIN + vals.CAR_WIDTH/2 + vals.LINE_WIDTH
-    elif index == 2:
-        # Center of third line
-        x = vals.MARGIN + vals.CAR_WIDTH/2 + vals.LINE_WIDTH*2
+    x = vals.MARGIN + vals.CAR_WIDTH/2 + vals.LINE_WIDTH
+    y = vals.HEIGHT - vals.MARGIN - 2*vals.CAR_HEIGHT
+    # if index == 0:
+    #     # Center of first line
+    #     x = vals.MARGIN + vals.CAR_WIDTH/2
+    # elif index == 1:
+    #     # Center of second line
+    #     x = vals.MARGIN + vals.CAR_WIDTH/2 + vals.LINE_WIDTH
+    # elif index == 2:
+    #     # Center of third line
+    #     x = vals.MARGIN + vals.CAR_WIDTH/2 + vals.LINE_WIDTH*2
     car = Enemy_car(x, y)
     cars.append(car)
 
@@ -101,7 +102,12 @@ def find_enemy_position(cars):
 
 
 def is_my_car_behind(my_car, enemy_car):  # MYCODE
-    if enemy_car - my_car > 0:
+    if enemy_car - my_car < 0:
+        return True
+    return False
+
+def are_cars_side_by_side(my_car, enemy_car):  # MYCODE
+    if enemy_car - my_car == 0:
         return True
     return False
 
@@ -143,10 +149,13 @@ def choose_action(cars, my_car):
     # MYCODE
     enemy_position = find_enemy_position(cars)
     is_behind = is_my_car_behind(my_position, enemy_position)
-    if is_behind:
+    is_side_by_side = are_cars_side_by_side(my_position, enemy_position)
+    if is_behind and not is_side_by_side:
         action = "left"
-    else:
+    elif is_side_by_side:
         action = "stay"
+    else:
+        action = "right"
     # Find state of each road line
     lines = map_cars_to_lines(cars, my_car)
     # Find distances to the nearest cars in all road lines
@@ -154,30 +163,30 @@ def choose_action(cars, my_car):
     # Find the safest line
     max_index = all_distances.index(max(all_distances))
 
-    action = ""
-    # I am on the left most, best line on the right most
-    if my_position + 1 < max_index:
-        # Check if there is a car in the middle
-        if all_distances[1] > 1 or all_distances[1] == 0:
-            action = "right"
-        else:
-            action = "stay"
-    # I am on the right most, best line on the left most
-    elif my_position - 1 > max_index:
-        # Check if there is a car in the middle
-        if all_distances[1] > 1 or all_distances[1] == 0:
-            action = "left"
-        else:
-            action = "stay"
-    # I am one step to the left of the best line
-    elif my_position < max_index:
-        action = "right"
-    # I am one step to the right of the best line
-    elif my_position > max_index:
-        action = "left"
-    # I am one on the best line
-    else:
-        action = "stay"
+    # action = ""
+    # # I am on the left most, best line on the right most
+    # if my_position + 1 < max_index:
+    #     # Check if there is a car in the middle
+    #     if all_distances[1] > 1 or all_distances[1] == 0:
+    #         action = "right"
+    #     else:
+    #         action = "stay"
+    # # I am on the right most, best line on the left most
+    # elif my_position - 1 > max_index:
+    #     # Check if there is a car in the middle
+    #     if all_distances[1] > 1 or all_distances[1] == 0:
+    #         action = "left"
+    #     else:
+    #         action = "stay"
+    # # I am one step to the left of the best line
+    # elif my_position < max_index:
+    #     action = "right"
+    # # I am one step to the right of the best line
+    # elif my_position > max_index:
+    #     action = "left"
+    # # I am one on the best line
+    # else:
+    #     action = "stay"
     return action, my_position, all_distances
 
 

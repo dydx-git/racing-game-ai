@@ -75,7 +75,8 @@ while 1:
             ai_model(model, cars, my_car)
         else:
             # Collect data by playing autopilot mode
-            autopilot(data, cars, my_car)
+            if cars:
+                autopilot(data, cars, my_car)
 
     # Perform this action every 2 frames
     if counter % (vals.ACTION_PERFORM_RATE*2) == 0:
