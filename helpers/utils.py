@@ -146,7 +146,8 @@ def find_all_distances(lines):
 
 def choose_action(cars, my_car):
     # Decide to either go left right or stay at still and Return a tuple of decision, my_position, all_distances
-
+    if not cars:
+        return 'left', 14, 12, True, False
     # Find X index of my position
     my_position = find_my_position(my_car)
     # MYCODE
@@ -212,8 +213,6 @@ def save_data_row(data, action, my_position, enemy_position, is_behind, is_side_
     
     row = []
     # Inputs
-    row.append(my_position)
-    row.append(enemy_position)
     row.append(int(is_behind))
     row.append(int(is_side_by_side))
     # Labels
@@ -240,7 +239,7 @@ def predict(input_array, model):
 def build_input_state(cars, my_car):
     # Turns all input variables into a single array
     action, my_position, enemy_position, is_behind, is_side_by_side = choose_action(cars, my_car)
-    return  [my_position, enemy_position, int(is_behind), int(is_side_by_side)]
+    return  [int(is_behind), int(is_side_by_side)]
 
 
 def autopilot(data, cars, my_car):

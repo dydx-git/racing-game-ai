@@ -6,7 +6,7 @@ import constants.constants as vals
 from data.data import *
 import os 
 
-model = load_model(os.path.abspath("D:/algo/huzzi/racing-game-ai/models/categorical_crossentropy.h5"))
+model = load_model(os.path.abspath("C:\\Users\\aldig\\racing-game-ai\\models\\categorical_crossentropy.h5"))
 
 
 pygame.init()
@@ -88,7 +88,7 @@ while 1:
     draw_my_car(SCREEN, my_car)
 
     if collect_data == True:
-        if counter == 600:
+        if counter == 571:
             save_data(data)
         elif counter <= rows:
             print("Counter - ", counter, " / ", rows)
